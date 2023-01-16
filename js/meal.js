@@ -1,9 +1,11 @@
+document.getElementById('error-message').style.display = 'none';
 const searchFood = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     console.log(searchText);
     // Clear data
     searchField.value = '';
+    document.getElementById('error-message').style.display = 'none';
     if (searchText == 0) {
         console.log('No data found')
     }
@@ -15,7 +17,13 @@ const searchFood = () => {
         fetch(url)
             .then(res => res.json())
             .then(data => displaySearchResult(data.meals))
+            .catch(error => displayError(error));
     }
+
+}
+
+const displayError = (error) => {
+    document.getElementById('error-message').style.display = 'block';
 
 }
 
