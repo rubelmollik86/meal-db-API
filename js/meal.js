@@ -2,19 +2,26 @@ const searchFood = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     console.log(searchText);
+    // Clear data
     searchField.value = '';
-    const url = `
+    if (searchText == 0) {
+        console.log('No data found')
+    }
+    else {
+        // Load data
+        const url = `
         https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}
     `;
-    // console.log(url);
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displaySearchResult(data.meals))
+        fetch(url)
+            .then(res => res.json())
+            .then(data => displaySearchResult(data.meals))
+    }
 
 }
 
 const displaySearchResult = meals => {
     const searchResult = document.getElementById('search-result');
+    searchResult.textContent = '';
     meals.forEach(meal => {
         // console.log(meal);
         const div = document.createElement('div');
@@ -41,8 +48,8 @@ const loadMealDeatil = (mealId) => {
 
 
 const displayMealDeatail = (meal) => {
-    console.log(meal);
-    const mealDetail = document.getElementById('meal-details');
+    const mealDetails = document.getElementById('meal-details');
+    mealDetails.textContent = '';
     const div = document.createElement('div')
     div.classList.add('card');
     div.innerHTML = `
@@ -53,5 +60,5 @@ const displayMealDeatail = (meal) => {
                 <a href="${meal.strYoutube}" class="btn btn-primary">Go somewhere</a>
             </div>
     `;
-    mealDetail.appendChild(div);
+    mealDetails.appendChild(div);
 }
